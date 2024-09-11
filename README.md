@@ -10,9 +10,10 @@
 - [Objetivo](#objetivo)
 - [Equipo](#equipo)
 - [Herramientas de apoyo](#herramientas-de-apoyo)
-  - [Procesamiento de los datos](#procesamiento-de-los-datos)
-  - [Análisis exploratorio](#análisis-exploratorio)
-  - [Validación de hipótesis](#validación-de-hipótesis)
+- [Procesamiento de los datos](#procesamiento-de-los-datos)
+- [Análisis exploratorio](#análisis-exploratorio)
+- [Aplicar técnica de análisis](#aplicar-técnica-de-análisis)
+- [Validación de hipótesis](#validación-de-hipótesis)
 - [Resultados](#resultados)
 - [Conclusiones](#conclusiones)
 - [Recomendaciones](#recomendaciones)
@@ -62,18 +63,48 @@ Mediante la aplicación de técnicas de análisis estadístico y visualización 
 </details>
 
 ## 💻Procesamiento de los datos
-+ Identificar valores nulos a través COUNTIF e IS NULL.
-+ Identificar duplicados a través de COUNT, GROUP BY, HAVING.
-+ Identificar datos discrepantes en variables categóricas con REGEXP_REPLACE.
-+ Identificar datos discrepantes en variables numéricas con MAX, MIN y AVG.
-+ Comprobar y modificar tipos de datos con SAFE_CAST y CAST.
-+ Crear nuevas variables DAY OF WEEK: Día de la semana a partir de FORMAT_DATE, ROUTE_CITY: Ruta de ciudad a ciudad a partir de ORIGIN_CITY y DEST_CITY, ROUT_AIRPORT: Ruta de aeropuerto a aeropuerto a partir de ORIGIN y DEST, HOUR_CRS_DEP_T: Hora del día a partir de EXTRACT y TIME, DISTANCE_QUARTILE: Número de cuartil por distancia a partir de NTILE(4), TOTAL_DELAY: Suma de los 5 motivos de DELAY, es el total de minutos, TOTAL_NUM_DELAY: Identifica si hay retraso o no, 1 para retraso, 0 sin retraso, STATUS_VUELO: Identifica si es un vuelo está, A TIEMPO, RETRASO, DESVIADO y CANCELADO, STATUS_VUELO_DES: Descripción de STATUS VUELO, describe, el tipo principal del retraso o la multifactorialidad del mismo, describe, el tipo de cancelado, además, asigna la etiqueta a desviados y a tiempo, EXCLUDING_CARRIER: Grupo no expuesto de Carrier, EXCLUDING_WEATHER: Grupo no expuesto de Weather, EXCLUDING_NAS: Grupo no expuesto de NAS, EXCLUDING_SECURITY: Grupo no expuesto de SECURITY, EXCLUDING_LATE_AIRCRAFT: Grupo no expuesto LATE AIRCRAFT. 
-+ Construir tablas auxiliares utilizando WITH.
-+ Unir las tablas utilizando LEFT JOIN.
++ Identificar valores nulos a través `COUNTIF` e `IS NULL`.
++ Identificar duplicados a través de `COUNT`, `GROUP BY`, `HAVING`.
++ Identificar datos discrepantes en variables categóricas con `REGEXP_REPLACE`.
++ Identificar datos discrepantes en variables numéricas con `MAX`, `MIN` y `AVG`.
++ Comprobar y modificar tipos de datos con `SAFE_CAST` y `CAST`.
++ Crear nuevas variables.
++ Unir las tablas utilizando `LEFT JOIN`.
 
 ## 🔎Análisis exploratorio
-+ Agrupar datos según variables categóricas a través de tablas
-+ Visualizar las variables categóricas a través de gráficos de barras y líneas 
-+ Aplicar medidas de tendencia central en BPM, Playlists y Streams
-+ Aplicar medidas de dispersión BPM, Playlists y Streams
-+ Visualizar distribución a través de Hitogramas BPM, Playlists y Streams
+El análisis exploratorio se llevó a cabo en Power BI, cargando el consolidado desde BigQuery.
+
++ Agrupar y visualizar datos según variables categóricas:
+  - Se agruparon retrasos y cancelaciones por aerolíneas, aeropuertos, rutas y motivos.
++ Aplicar medidas de tendencia central y dispersión:
+  - Se calcularon medidas de tendencia central (media, mediana) y dispersión (mínimo, máximo, desviación estándar) para los retrasos.
++ Visualizar el comportamiento de los datos a lo largo del tiempo:
+  - Se observó el comportamiento de los retrasos y cancelaciones durante el mes de enero, así como el promedio de minutos de retraso por hora del día.
++ Calcular cuartiles:
+  - Se calcularon cuartiles para la variable `DISTANCE`.
++ Calcular correlación entre variables:
+  - Se realizó una matriz de correlación en Google Colab.
+ 
+## 〽 Aplicar técnica de análisis 
+
+### Calculo de riesgo relativo
+
+Se ha calculado el riesgo relativo utilizando los comandos `WITH`, `COUNT`, `COUNTIF`, `CASE`, `WHEN`, `MIN`, y `MAX` en BigQuery para los retrasos. La muestra se segmentó a partir de aerolíneas, aeropuertos, rutas, motivos y horas. Además, se hizo una segmentación por cuartiles para la distancia. Por último, se calculó el riesgo relativo para cancelaciones por motivo.
+
+El riesgo relativo se define como:
+
+Técnica estadística que estima la probabilidad de que ocurra un evento particular en un grupo especifico en comparación con otro grupo.
+
+**Riesgo Relativo (RR)** = \[Tasa de Incidencia en el Grupo Expuesto\] / \[Tasa de Incidencia en el Grupo No Expuesto\]
+
+## ✔ Validación de hipótesis 
+
+La validación de hipótesis se llevó a cabo en BigQuery.
+
+Análisis de correlación entre métricas (Coeficiente de Pearson)
+Riesgo relativo
+
+
+
+
+
